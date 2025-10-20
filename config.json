@@ -1,0 +1,37 @@
+{
+    "perspective": 1000,
+    "radius": 500,
+    "autoRotateSpeed": 0.2,
+    "scrollRotateSpeed": 4,
+    "timeAuto": 3000,
+    "itemWidth": 400,
+    "itemHeight": 550,
+    "indexUp": 100,
+    "items": [
+        {
+            "path": "http://0.0.0.0:5000/slider_3d/index.html",
+            "title": "Page1"
+          },
+          {
+            "path": "http://0.0.0.0:5000/slider_3d/index.html",
+            "title": "Page2"
+          } ,
+          {
+            "path": "http://0.0.0.0:5000/slider_3d/index.html",
+            "title": "Page3"
+          },
+          {
+            "path": "http://0.0.0.0:5000/slider_3d/index.html",
+            "title": "Page4"
+          } ,
+          {
+            "path": "http://0.0.0.0:5000/slider_3d/index.html",
+            "title": "Page5"
+          },
+          {
+            "path": "http://0.0.0.0:5000/slider_3d/index.html",
+            "title": "Page6"
+          } 
+    ]
+  }
+  
