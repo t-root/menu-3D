@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu3D - Interactive 3D Menu</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #111;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #fff;
+    }
+
+    h1 {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      color: #fff;
+      text-shadow: 0 0 5px #00f, 0 0 10px #0ff;
+      z-index: 10;
+      user-select: none;
+    }
+
+    .hint {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      color: #ccc;
+      text-align: center;
+      opacity: 0.8;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <h1>Menu3D Demo</h1>
+  <div class="hint">
+    🖱️ Right-click để mở menu 3D • Double right-click để mở menu chuột<br />
+    🌀 Kéo chuột để xoay • Cuộn để điều chỉnh góc quay
+  </div>
+
+  <!-- Gọi file script -->
+  <script src="script.js"></script>
+</body>
+</html>
