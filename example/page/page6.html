@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Keyboard Rain FX — Color Variables</title>
+<style>
+  body { margin:0; padding:0; background:#000; overflow:hidden; }
+</style>
+</head>
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+<script src="matrix-config.js"></script>
+
+<script>
+// ================= CẤU HÌNH DÙNG CHUNG =================
+const CONFIG = window.MatrixConfig || {};
+const COLORS = CONFIG.colors || {};
+
+let colorConfig = {
+  headColor: COLORS[CONFIG.headColorKey] || [180,255,180],
+  tailColor: COLORS[CONFIG.defaultTailColorKey] || [0,255,100]
+};
+
+const PAGE_TAIL_COLORS = CONFIG.pageTailColors || {};
+const currentPage = window.location.pathname.split('/').pop() || '';
+const pageTailKey = PAGE_TAIL_COLORS[currentPage];
+if (pageTailKey && COLORS[pageTailKey]) {
+  colorConfig.tailColor = COLORS[pageTailKey];
+}
+
+// ================= CONFIG KÝ TỰ =================
+let symbolSize = CONFIG.symbolSize || 20;
+let streams = [];
+let keyboardChars = '';
+for (let i = 33; i <= 126; i++) keyboardChars += String.fromCharCode(i);
+
+const streamLength = CONFIG.streamLength || { min: 15, max: 20 };
+const streamSpeed = CONFIG.streamSpeed || { min: 5, max: 10 };
+const backgroundAlpha = (typeof CONFIG.backgroundAlpha === 'number') ? CONFIG.backgroundAlpha : 180;
+
+// ================= SYMBOL =================
+function SymbolObj(x, y, speed, brightHead) {
+  this.x = x;
+  this.y = y;
+  this.value = '';
+  this.speed = speed;
+  this.brightHead = brightHead;
+  this.switchInterval = round(random(2, 10));
+
+  this.setRandom = function () {
+    this.value = keyboardChars.charAt(floor(random(keyboardChars.length)));
+  };
+
+  this.update = function () {
+    if (frameCount % this.switchInterval === 0) this.setRandom();
+    this.y = (this.y > height) ? 0 : this.y + this.speed;
+  };
+}
+
+// ================= STREAM =================
+function Stream() {
+  this.symbols = [];
+  this.total = round(random(streamLength.min, streamLength.max));
+  this.speed = random(streamSpeed.min, streamSpeed.max);
+
+  this.gen = function (x, y) {
+    let brightHead = true;
+    for (let i = 0; i < this.total; i++) {
+      let s = new SymbolObj(x, y, this.speed, brightHead);
+      s.setRandom();
+      this.symbols.push(s);
+      y -= symbolSize;
+      brightHead = false;
+    }
+  };
+
+  this.render = function () {
+    for (let i = 0; i < this.symbols.length; i++) {
+      let s = this.symbols[i];
+      let alpha = map(i, 0, this.symbols.length, 50, 255);
+
+      if (s.brightHead) fill(...colorConfig.headColor, 255);
+      else fill(...colorConfig.tailColor, alpha);
+
+      text(s.value, s.x, s.y);
+      s.update();
+    }
+  };
+}
+
+// ================= P5 SETUP =================
+function setup() {
+  createCanvas(window.innerWidth, window.innerHeight);
+  background(0);
+  textSize(symbolSize);
+  textFont("monospace");
+
+  let x = 0;
+  for (let i = 0; i < width / symbolSize; i++) {
+    let s = new Stream();
+    s.gen(x, random(-2000, 0));
+    streams.push(s);
+    x += symbolSize;
+  }
+}
+
+function draw() {
+  background(0, backgroundAlpha); // nền bán trong để tạo dấu vết
+  for (let s of streams) s.render();
+}
+</script>
+
+</body>
+</html>
