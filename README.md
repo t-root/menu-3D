@@ -9,7 +9,7 @@ Menu3D là một thư viện JavaScript tạo menu 3D carousel tương tác, cho
 ```
 main/
 ├── index.js          # Script chính (chứa cả CSS)
-├── config.json       # File cấu hình
+├── config.json       # File cấu hình (phải cùng thư mục với index.js)
 ├── icon/             # Thư mục chứa icon
 │   ├── close.png     # Icon khi menu đóng
 │   └── open.png      # Icon khi menu mở 
@@ -46,17 +46,19 @@ Script sẽ tự động detect đường dẫn dựa trên vị trí file `inde
 ```
 project-root/
 ├── main/
-│   ├── index.js
-│   ├── config.json
+│   ├── index.js          # Script chính
+│   ├── config.json       # File cấu hình (phải cùng thư mục với index.js)
 │   └── icon/
 │       ├── close.png
 │       └── open.png
 └── your-page.html
 ```
 
+**Lưu ý quan trọng**: `config.json` phải nằm **cùng thư mục** với `index.js` (trong thư mục `main/`). Script sẽ tự động tìm `config.json` từ cùng đường dẫn với `index.js`.
+
 ### 3. Tính năng tự động
 
-- **Tự động detect đường dẫn**: Script tự tìm đường dẫn đến `config.json` và icon dựa trên vị trí file `index.js`
+- **Tự động detect đường dẫn**: Script tự tìm đường dẫn đến `config.json` (cùng thư mục với `index.js`) và icon dựa trên vị trí file `index.js`
 - **Responsive**: Tự động chuyển đổi giữa desktop và mobile mode
 - **CSS tích hợp**: Không cần file CSS riêng, tất cả đã được embed trong JS
 
@@ -72,10 +74,10 @@ project-root/
     "scrollRotateSpeed": 4,
     "indexUp": 100,
     "timeAuto": 3000,
-    "desktop": { ... },
-    "mobile": { ... },
     "iconClosed": "close.png",
     "iconOpen": "open.png",
+    "desktop": { ... },
+    "mobile": { ... },
     "items": [ ... ]
 }
 ```
@@ -253,18 +255,20 @@ Menu tự động chuyển đổi giữa desktop và mobile mode dựa trên `br
 
 ## Lưu ý quan trọng
 
-1. **Đường dẫn tương đối**: Script tự động detect đường dẫn, nhưng đảm bảo cấu trúc thư mục đúng
-2. **Icon path**: Chỉ cần tên file trong `config.json`, script sẽ tự thêm đường dẫn
-3. **CORS**: Nếu load trang từ domain khác, đảm bảo CORS được cấu hình đúng
-4. **Performance**: Menu sử dụng CSS 3D transforms, đảm bảo trình duyệt hỗ trợ
+1. **Vị trí config.json**: `config.json` **phải** nằm cùng thư mục với `index.js` (trong thư mục `main/`). Script sẽ tự động tìm từ cùng đường dẫn với `index.js`
+2. **Đường dẫn tương đối**: Script tự động detect đường dẫn, nhưng đảm bảo cấu trúc thư mục đúng
+3. **Icon path**: Chỉ cần tên file trong `config.json`, script sẽ tự thêm đường dẫn
+4. **CORS**: Nếu load trang từ domain khác, đảm bảo CORS được cấu hình đúng
+5. **Performance**: Menu sử dụng CSS 3D transforms, đảm bảo trình duyệt hỗ trợ
 
 ## Hỗ trợ
 
 Nếu gặp vấn đề:
 1. Kiểm tra console browser để xem lỗi
-2. Đảm bảo đường dẫn đến `config.json` và icon đúng
-3. Kiểm tra cấu trúc JSON trong `config.json` có hợp lệ không
-4. Xem ví dụ trong thư mục `example/` để so sánh
+2. Đảm bảo `config.json` nằm cùng thư mục với `index.js` (trong thư mục `main/`)
+3. Đảm bảo đường dẫn đến `config.json` và icon đúng
+4. Kiểm tra cấu trúc JSON trong `config.json` có hợp lệ không
+5. Xem ví dụ trong thư mục `example/` để so sánh
 
 ---
 
@@ -279,7 +283,7 @@ Menu3D is a JavaScript library that creates an interactive 3D carousel menu, all
 ```
 main/
 ├── index.js          # Main script (includes CSS)
-├── config.json       # Configuration file
+├── config.json       # Configuration file (must be in same directory as index.js)
 ├── icon/             # Icon directory
 │   ├── close.png     # Icon when menu is closed
 │   └── open.png      # Icon when menu is open
@@ -316,17 +320,19 @@ The script automatically detects paths based on the location of `index.js`. Ensu
 ```
 project-root/
 ├── main/
-│   ├── index.js
-│   ├── config.json
+│   ├── index.js          # Main script
+│   ├── config.json       # Configuration file (must be in same directory as index.js)
 │   └── icon/
 │       ├── close.png
 │       └── open.png
 └── your-page.html
 ```
 
+**Important note**: `config.json` must be in the **same directory** as `index.js` (inside the `main/` folder). The script will automatically find `config.json` from the same path as `index.js`.
+
 ### 3. Automatic Features
 
-- **Auto path detection**: Script automatically finds paths to `config.json` and icons based on `index.js` location
+- **Auto path detection**: Script automatically finds paths to `config.json` (same directory as `index.js`) and icons based on `index.js` location
 - **Responsive**: Automatically switches between desktop and mobile modes
 - **Embedded CSS**: No separate CSS file needed, everything is embedded in JS
 
@@ -342,10 +348,10 @@ project-root/
     "scrollRotateSpeed": 4,
     "indexUp": 100,
     "timeAuto": 3000,
-    "desktop": { ... },
-    "mobile": { ... },
     "iconClosed": "close.png",
     "iconOpen": "open.png",
+    "desktop": { ... },
+    "mobile": { ... },
     "items": [ ... ]
 }
 ```
@@ -523,15 +529,17 @@ Menu automatically switches between desktop and mobile modes based on `breakpoin
 
 ## Important Notes
 
-1. **Relative paths**: Script automatically detects paths, but ensure correct directory structure
-2. **Icon path**: Only filename needed in `config.json`, script will automatically add path
-3. **CORS**: If loading pages from different domains, ensure CORS is properly configured
-4. **Performance**: Menu uses CSS 3D transforms, ensure browser support
+1. **config.json location**: `config.json` **must** be in the same directory as `index.js` (inside the `main/` folder). The script will automatically find it from the same path as `index.js`
+2. **Relative paths**: Script automatically detects paths, but ensure correct directory structure
+3. **Icon path**: Only filename needed in `config.json`, script will automatically add path
+4. **CORS**: If loading pages from different domains, ensure CORS is properly configured
+5. **Performance**: Menu uses CSS 3D transforms, ensure browser support
 
 ## Support
 
 If you encounter issues:
 1. Check browser console for errors
-2. Ensure paths to `config.json` and icons are correct
-3. Verify JSON structure in `config.json` is valid
-4. Check examples in `example/` directory for comparison
+2. Ensure `config.json` is in the same directory as `index.js` (in `main/` folder)
+3. Ensure paths to `config.json` and icons are correct
+4. Verify JSON structure in `config.json` is valid
+5. Check examples in `example/` directory for comparison
