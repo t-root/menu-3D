@@ -255,11 +255,35 @@ Menu tự động chuyển đổi giữa desktop và mobile mode dựa trên `br
 
 ## Lưu ý quan trọng
 
-1. **Vị trí config.json**: `config.json` **phải** nằm cùng thư mục với `index.js` (trong thư mục `main/`). Script sẽ tự động tìm từ cùng đường dẫn với `index.js`
-2. **Đường dẫn tương đối**: Script tự động detect đường dẫn, nhưng đảm bảo cấu trúc thư mục đúng
-3. **Icon path**: Chỉ cần tên file trong `config.json`, script sẽ tự thêm đường dẫn
-4. **CORS**: Nếu load trang từ domain khác, đảm bảo CORS được cấu hình đúng
-5. **Performance**: Menu sử dụng CSS 3D transforms, đảm bảo trình duyệt hỗ trợ
+### ⚠️ Cảnh báo về hiệu năng và vòng lặp vô hạn
+
+1. **Chỉ thích hợp với ứng dụng web (SPA)**: Menu3D được thiết kế cho **Single Page Applications (SPA)** hoặc các trang web không reload thường xuyên. Mỗi lần tải lại trang, menu sẽ:
+   - Load lại `config.json`
+   - Tạo lại toàn bộ DOM elements (menu, scene, items, iframes)
+   - Load lại tất cả các iframe chứa nội dung (rất nặng về tài nguyên)
+   - Khởi tạo lại animation loop (`requestAnimationFrame`)
+   - Tốn nhiều bộ nhớ và CPU
+
+2. **⚠️ KHÔNG đặt menu ở mọi trang**: **Tuyệt đối không** đặt script menu ở tất cả các trang được liệt kê trong `config.json`. Điều này sẽ tạo **vòng lặp vô hạn**:
+   - Trang A có menu → menu load iframe chứa trang B
+   - Trang B cũng có menu → menu load iframe chứa trang C  
+   - Trang C cũng có menu → menu load iframe chứa trang D
+   - ... → Vòng lặp vô hạn, mỗi trang lại load menu, menu lại load iframe, iframe lại load trang có menu...
+   - **Hậu quả**: Browser bị lag nghiêm trọng, có thể crash, tiêu tốn rất nhiều RAM và CPU
+
+3. **Giải pháp khuyến nghị**:
+   - Chỉ đặt menu ở **một trang chính** (ví dụ: trang index/home)
+   - Các trang trong `items` **không nên** có script menu
+   - Sử dụng với SPA framework (React, Vue, Angular) để tránh reload trang
+   - Hoặc sử dụng menu như một overlay độc lập, không embed vào các trang con
+
+### Các lưu ý khác
+
+4. **Vị trí config.json**: `config.json` **phải** nằm cùng thư mục với `index.js` (trong thư mục `main/`). Script sẽ tự động tìm từ cùng đường dẫn với `index.js`
+5. **Đường dẫn tương đối**: Script tự động detect đường dẫn, nhưng đảm bảo cấu trúc thư mục đúng
+6. **Icon path**: Chỉ cần tên file trong `config.json`, script sẽ tự thêm đường dẫn
+7. **CORS**: Nếu load trang từ domain khác, đảm bảo CORS được cấu hình đúng
+8. **Performance**: Menu sử dụng CSS 3D transforms, đảm bảo trình duyệt hỗ trợ
 
 ## Hỗ trợ
 
@@ -529,11 +553,35 @@ Menu automatically switches between desktop and mobile modes based on `breakpoin
 
 ## Important Notes
 
-1. **config.json location**: `config.json` **must** be in the same directory as `index.js` (inside the `main/` folder). The script will automatically find it from the same path as `index.js`
-2. **Relative paths**: Script automatically detects paths, but ensure correct directory structure
-3. **Icon path**: Only filename needed in `config.json`, script will automatically add path
-4. **CORS**: If loading pages from different domains, ensure CORS is properly configured
-5. **Performance**: Menu uses CSS 3D transforms, ensure browser support
+### ⚠️ Performance and Infinite Loop Warning
+
+1. **Only suitable for web applications (SPA)**: Menu3D is designed for **Single Page Applications (SPA)** or websites that don't reload frequently. Each page reload will:
+   - Reload `config.json`
+   - Recreate all DOM elements (menu, scene, items, iframes)
+   - Reload all iframes containing content (very resource-intensive)
+   - Reinitialize the animation loop (`requestAnimationFrame`)
+   - Consume significant memory and CPU
+
+2. **⚠️ DO NOT place menu on every page**: **Absolutely do not** place the menu script on all pages listed in `config.json`. This will create an **infinite loop**:
+   - Page A has menu → menu loads iframe containing page B
+   - Page B also has menu → menu loads iframe containing page C
+   - Page C also has menu → menu loads iframe containing page D
+   - ... → Infinite loop, each page loads menu, menu loads iframe, iframe loads page with menu...
+   - **Consequence**: Browser will lag severely, may crash, consumes excessive RAM and CPU
+
+3. **Recommended solution**:
+   - Only place menu on **one main page** (e.g., index/home page)
+   - Pages in `items` **should not** have the menu script
+   - Use with SPA frameworks (React, Vue, Angular) to avoid page reloads
+   - Or use menu as a standalone overlay, not embedded in child pages
+
+### Other Notes
+
+4. **config.json location**: `config.json` **must** be in the same directory as `index.js` (inside the `main/` folder). The script will automatically find it from the same path as `index.js`
+5. **Relative paths**: Script automatically detects paths, but ensure correct directory structure
+6. **Icon path**: Only filename needed in `config.json`, script will automatically add path
+7. **CORS**: If loading pages from different domains, ensure CORS is properly configured
+8. **Performance**: Menu uses CSS 3D transforms, ensure browser support
 
 ## Support
 
