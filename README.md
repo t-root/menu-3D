@@ -1,5 +1,15 @@
 # Menu3D - Hướng dẫn sử dụng
 
+## Hình ảnh demo
+
+<div align="center">
+  <img src="img-demo/img1.png" alt="Menu3D Demo 1" width="45%" style="margin: 5px;">
+  <img src="img-demo/img2.png" alt="Menu3D Demo 2" width="45%" style="margin: 5px;">
+  <br>
+  <img src="img-demo/img3.png" alt="Menu3D Demo 3" width="45%" style="margin: 5px;">
+  <img src="img-demo/img4.png" alt="Menu3D Demo 4" width="45%" style="margin: 5px;">
+</div>
+
 ## Giới thiệu
 
 Menu3D là một thư viện JavaScript tạo menu 3D carousel tương tác, cho phép hiển thị các trang web trong một không gian 3D có thể xoay và điều hướng. Script tự động detect đường dẫn và không cần cấu hình phức tạp.
@@ -297,6 +307,16 @@ Nếu gặp vấn đề:
 ---
 
 # Menu3D - User Guide  
+
+## Demo Images
+
+<div align="center">
+  <img src="img-demo/img1.png" alt="Menu3D Demo 1" width="45%" style="margin: 5px;">
+  <img src="img-demo/img2.png" alt="Menu3D Demo 2" width="45%" style="margin: 5px;">
+  <br>
+  <img src="img-demo/img3.png" alt="Menu3D Demo 3" width="45%" style="margin: 5px;">
+  <img src="img-demo/img4.png" alt="Menu3D Demo 4" width="45%" style="margin: 5px;">
+</div>
 
 ## Introduction
 
