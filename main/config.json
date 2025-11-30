@@ -1,55 +1,54 @@
 {
-    "breakpoint": 700,
-    "cameraOffset": 0,
-    "autoRotateSpeed": 0.2,
-    "scrollRotateSpeed": 4,
-    "indexUp": 100,
-    "timeAuto": 3000,
-    "desktop": {
-        "perspective": 55,
-        "radius": 26,  
-        "itemWidth": 15,
-        "itemHeight": 22, 
-        "toggleSize": 4
-    },
-    "mobile": {
-        "perspective": 70,
-        "radius": 50,
-        "itemWidth": 30,
-        "itemHeight": 50,
-        "toggleSize": 15
-    },
-    "iconClosed": "close.png",
-    "iconOpen": "open.png",
-    "items": [
+  "breakpoint": 700,
+  "cameraOffset": 0,
+  "autoRotateSpeed": 0.2,
+  "scrollRotateSpeed": 4,
+  "indexUp": 100,
+  "timeAuto": 3000,
+  "iconClosed": "close.png",
+  "iconOpen": "open.png",
+  "desktop": {
+      "perspective": 55,
+      "radius": 26,  
+      "itemWidth": 15,
+      "itemHeight": 22, 
+      "toggleSize": 4
+  },
+  "mobile": {
+      "perspective": 70,
+      "radius": 50,
+      "itemWidth": 30,
+      "itemHeight": 50,
+      "toggleSize": 15
+  },
+  "items": [
+      {
+          "path": "/example/page/page1.html",
+          "title": "Pag e1Page1Page1P age1Page1e1Page1Page1Page1Page1"
+        },
         {
-            "path": "/example/page/page1.html",
-            "title": "Page1"
-          },
-          {
-            "path": "/example/page/page2.html",
-            "title": "Page2"
-          } ,
-          {
-            "path": "/example/page/page3.html",
-            "title": "Page3"
-          },
-          {
-            "path": "/example/page/page4.html",
-            "title": "Page4"
-          } ,
-          {
-            "path": "/example/page/page5.html",
-            "title": "Page5"
-          },
-          {
-            "path": "/example/page/page6.html",
-            "title": "Page6"
-          },
-          {
-            "path": "/example/page/page7.html",
-            "title": "Page7"
-          }
-    ]
-  }
-  
+          "path": "/example/page/page2.html",
+          "title": "Page2"
+        } ,
+        {
+          "path": "/example/page/page3.html",
+          "title": "Page3"
+        },
+        {
+          "path": "/example/page/page4.html",
+          "title": "Page4"
+        } ,
+        {
+          "path": "/example/page/page5.html",
+          "title": "Page5"
+        },
+        {
+          "path": "/example/page/page6.html",
+          "title": "Page6"
+        },
+        {
+          "path": "/example/page/page7.html",
+          "title": "Page7"
+        }
+  ]
+}

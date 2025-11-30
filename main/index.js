@@ -76,6 +76,23 @@ window.addEventListener('load', () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.menu-label-text {
+  display: inline-block;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+.menu-label.scrolling {
+  justify-content: flex-start;
+}
+ 
+ 
+.menu-label.scrolling:hover .menu-label-text {
+  animation-play-state: paused;
 }
 
 .menu-toggle-btn {
@@ -400,6 +417,70 @@ window.addEventListener('load', () => {
         });
     };
 
+    // Hàm kiểm tra và áp dụng scroll effect
+    const checkAndApplyScroll = () => {
+        const labels = document.querySelectorAll('.menu-label');
+        labels.forEach((label, index) => {
+            const textSpan = label.querySelector('.menu-label-text');
+            if (!textSpan) return;
+            
+            // Đảm bảo có index để tạo keyframe unique
+            if (!label.dataset.scrollIndex) {
+                label.dataset.scrollIndex = index;
+            }
+            const scrollIndex = label.dataset.scrollIndex;
+            
+            const labelWidth = label.offsetWidth;
+            const textWidth = textSpan.scrollWidth;
+            
+            // Nếu text dài hơn container thì thêm class scrolling
+            if (textWidth > labelWidth) {
+                label.classList.add('scrolling');
+                
+                // Tính toán vị trí bắt đầu và kết thúc
+                // Bắt đầu từ bên phải của label (labelWidth) và kết thúc ở bên trái (-textWidth)
+                const startX = labelWidth;
+                const endX = -textWidth;
+                const distance = startX - endX;
+                
+                // Tính thời gian animation dựa trên độ dài text (tốc độ ~50px/s)
+                const speed = 50; // pixels per second
+                const duration = Math.max(5, distance / speed);
+                
+                // Tạo keyframes động với tên unique
+                const keyframeName = `scrollText-${scrollIndex}`;
+                const keyframes = `
+                    @keyframes ${keyframeName} {
+                        0% {
+                            transform: translateX(${startX}px);
+                        }
+                        100% {
+                            transform: translateX(${endX}px);
+                        }
+                    }
+                `;
+                
+                // Thêm hoặc cập nhật style cho keyframes này
+                let styleId = `scrollStyle-${scrollIndex}`;
+                let existingStyle = document.getElementById(styleId);
+                if (existingStyle) {
+                    existingStyle.textContent = keyframes;
+                } else {
+                    existingStyle = document.createElement('style');
+                    existingStyle.id = styleId;
+                    existingStyle.textContent = keyframes;
+                    document.head.appendChild(existingStyle);
+                }
+                
+                // Áp dụng animation
+                textSpan.style.animation = `${keyframeName} ${duration}s linear infinite`;
+            } else {
+                label.classList.remove('scrolling');
+                textSpan.style.animation = '';
+            }
+        });
+    };
+
     // Khởi tạo các mục trong carousel
     cfg.items.forEach((c, i) => {
         const el = document.createElement('div');
@@ -413,18 +494,30 @@ window.addEventListener('load', () => {
         el.appendChild(iframe);
 
         if (c.title) {
-        const a = document.createElement('a');
-        a.href = c.path;
-        a.className = 'menu-label';
-        a.textContent = c.title;
-        el.appendChild(a);
+            const a = document.createElement('a');
+            a.href = c.path;
+            a.className = 'menu-label';
+            
+            // Thêm wrapper cho text
+            const textSpan = document.createElement('span');
+            textSpan.className = 'menu-label-text';
+            textSpan.textContent = c.title;
+            a.appendChild(textSpan);
+            
+            el.appendChild(a);
         }
 
         scene.appendChild(el);
     });
 
     // Cập nhật font-size sau khi tạo labels và khi resize
-    setTimeout(updateLabelFontSizes, 0);
+    setTimeout(() => {
+        updateLabelFontSizes();
+        // Delay thêm một chút để đảm bảo layout đã render
+        setTimeout(() => {
+            checkAndApplyScroll(); // Kiểm tra scroll sau khi render
+        }, 100);
+    }, 0);
 
     // Slider logic
     let rotX = 0, rotY = 0, isPaused = false, pauseTO = null;
@@ -460,7 +553,13 @@ window.addEventListener('load', () => {
     // Vẽ lần đầu
     update();
     // Cập nhật font-size sau khi render
-    setTimeout(updateLabelFontSizes, 100);
+    setTimeout(() => {
+        updateLabelFontSizes();
+        // Delay thêm để đảm bảo layout đã ổn định
+        setTimeout(() => {
+            checkAndApplyScroll();
+        }, 150);
+    }, 100);
 
     // Auto rotate
     (function animate() {
@@ -522,6 +621,7 @@ window.addEventListener('load', () => {
         snapToNearestEdge();
         update();
         updateLabelFontSizes();
+        checkAndApplyScroll(); // Kiểm tra lại khi resize
     };
     window.addEventListener('resize', handleResize);
     }
